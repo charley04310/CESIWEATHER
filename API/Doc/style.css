@@ -1,0 +1,59 @@
+#entete {
+    display: flex;
+    justify-content: space-between;
+    padding-right: 5px;
+    background-color: #29292E;
+    color: rgb(243, 245, 250);
+}
+
+body {
+    margin: 0px;
+    background-color: rgb(243, 245, 250);
+}
+
+section{
+    margin: 100px;
+}
+
+#logo_cesi_weather{
+    display: table-cell;
+    height: 100px;
+    position:relative;
+    line-height: 150px;
+    text-align: center;
+    vertical-align: center;
+
+}
+
+#titre{
+    height: 100px;
+    position:relative;
+    line-height: 50px;
+    text-align: center;
+    vertical-align: center;
+
+}
+
+#dateMaj {
+    height: 100px;
+    position:relative;
+    line-height: 140px;
+    text-align: center;
+    vertical-align: center;
+
+}
+
+table{
+    border-collapse: collapse; 
+}
+
+caption{
+    font-weight:bold;
+    text-align: left;
+    padding-bottom: 5px;
+}
+
+td,th{
+    border:1px black solid;
+    padding:5px
+}

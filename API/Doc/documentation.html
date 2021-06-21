@@ -1,0 +1,128 @@
+<!DOCTYPE html>	
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>API Cesi Weather Documentation</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+    <header>
+        <div id="entete">
+   
+            <div id="logo_cesi_weather"><img height="50px" src="img/Hcesiweather.png" alt="CESIWEATHER"></div>
+            <div id="titre"><h1>API Cesi Weather Documentation</h1></div>
+            <div id="dateMaj"><p>Date de derniere mise à jour : 20/06/2021</p></div>
+            
+       
+        </div>
+    </header>
+    <body>
+        <section>
+            <h2>Présentation</h2>
+            <p>L'api Cesi weather est une api REST qui utilise les méthodes CRUD. <br/>
+            Elle permet d'alimenter une base de données avec les données de température et d'humidité mesurées par les capteurs 
+            et de restituer les données sur une interface web.<br/>
+            La gestion des capteurs peut également etre faite à partir d'une interface web.<br/>
+            Pour le verbe Get un format json est retourné et pour les verbes Put et Post un format json est attendu<br/><br/></p>
+
+            <table>
+                <caption> Relevés</caption>     
+                <tr>
+                    <th>Méthode</th>       
+                    <th>EndPoint</th>        
+                    <th>Description</th>
+                    <th>Clés attendues dans le json</th>   
+                </tr>
+            
+
+                <tr>
+                    <td>Get</td>
+                    <td>api/index.php?cptId</td>
+                    <td>Permet de récuperer tous les relevés pour un capteur donné</td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td>Get</td>
+                    <td>api/index.php?id=last&cptId</td>
+                    <td>Permet de récuperer le dernier relevé pour un capteur donné</td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td>Get</td>
+                    <td>api/index.php?dateInf&dateSup&cptId</td>
+                    <td>Permet de récuperer les relevés entre deux dates pour un capteur donné</td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td>Get</td>
+                    <td>api/index.php?dateInf&cptId</td>
+                    <td>Permet de récuperer les relevés à partir d'une date pour un capteur donné</td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td>Post </td>
+                    <td>api/index.php</td>
+                    <td>Permet d'ajouter un relevé de temperature et d'humidité pour un capteur donné</td>
+                    <td>Cpt_Id, Rel_Temp, Rel_Hum</td>
+                </tr>
+
+            </table>
+            <div><br/><br/><br/></div>
+            <table>
+                <caption> Capteurs</caption>     
+                <tr>
+                    <th>Méthode</th>       
+                    <th>EndPoint</th>        
+                    <th>Description</th>
+                    <th>Clés attendues dans le json</th>        
+                </tr>
+            
+
+                <tr>
+                    <td>Get</td>
+                    <td>api/capteur.php?id</td>
+                    <td>Permet de récuperer les données d'un capteur</td>
+                    <td></td>
+                </tr>
+                
+                <tr>
+                    <td>Get</td>
+                    <td>api/capteur.php</td>
+                    <td>Permet de récuperer les données de tous les capteurs</td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td>Post </td>
+                    <td>api/capteur.php</td>
+                    <td>Permet d'ajouter un capteur </td>
+                    <td>Cpt_Latitude, Cpt_Longitude, Cpt_Adresse, Cpt_Activation, Cpt_Caracteristique</td>
+
+                </tr>
+
+                <tr>
+
+                    <td>Put</td>
+                    <td>api/capteur.php?id</td>
+                    <td>Permet de mettre à jour les données d'un capteur</td>
+                    <td>Cpt_Latitude, Cpt_Longitude, Cpt_Adresse, Cpt_DateInstallation, Cpt_Activation, Cpt_Caracteristique</td>
+
+                </tr>
+
+                <tr>
+                    <td>Delete</td>
+                    <td>api/capteur.php?id</td>
+                    <td>Permet de supprimer un capteur</td>
+                    <td></td>
+                </tr>
+
+            </table>
+        </section>
+    </body>
+</html>
+
+
