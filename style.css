@@ -1,0 +1,241 @@
+body{margin: 0;font-family: 'Roboto', sans-serif; background-color: #29292E;}
+section.container_HP{ max-width: 1200px; margin: 0 auto;}
+header{border-bottom: 1px  solid #181818; padding: 1rem 0 1rem 0;
+background-color: #29292E;
+box-shadow: 0px 2px 12px #181818;
+}
+h1{ text-align: left; color:rgb(218, 218, 218); margin-bottom: 0.5rem;}
+h2{ margin: 0; font-size: 20px;}
+h3{margin: 0;}
+p{ margin: 0;}
+ 
+a {text-decoration: none !important; color:#ffffff !important;}
+
+#logo_cesi_weather{ width: 60px;}
+
+
+/*---------- MENU NAVIGATION------------*/
+div#menu_navigation {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 10rem;
+}
+
+ul#liste_menu {
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    
+}
+
+li.navigation {
+    margin: 0 2rem;
+    font-weight: bolder;
+    position: relative;
+}
+
+li.navigation a:hover{ 
+ cursor: pointer;}
+
+li.navigation a:after{content:''; 
+    height: 3px; width: 0px; 
+    background:#287EB8; 
+    border-radius: 10px; 
+    position: absolute; 
+    bottom: -2px; right: 0%; 
+    transition: .5s;}
+li.navigation a:hover:after{ width: 100%; left: 0%;}
+
+li.navigation.active{
+    border-bottom: 3px solid #287EB8; padding-top: 0.25rem;  border-radius: 3%;
+}
+
+/*---------- MENU NAVIGATION------------*/
+
+.graph_hum,.graph_temp  {
+    width: 550px;
+    
+   }
+
+.graph_hum{
+    margin-right: 1rem;
+   }
+
+   .graph_temp{
+    margin-left: 1rem;
+   }
+
+#graphiques{ display: flex;
+    justify-content: space-between;
+}
+
+/*---------- CARTE WEATHER ------------*/
+
+#logo_sun{ width: 55px; padding-top: 5px;}
+#bloc_carte_weather{display: flex; justify-content: flex-start; margin: 2rem 0 2rem 0;}
+.carte_weather{box-shadow: 0px 2px 12px #181818;
+    background: #0000003b;color:rgb(218, 218, 218);display: flex; BORDER: 1PX SOLID #545353; width: 370px; padding: 1rem; border-radius: 10px; justify-content: center; margin: 0 0.5rem 0 0.5rem;}
+.carte_weather:hover{background: #9a9a9a3b;}
+.carte_weather:hover .text_carte{ color:#181818;}
+
+.lieux_capteurs{color:#b45931;}
+.text_carte{padding-left: 1rem;}
+.temp_carte p{ font-size: 26px; padding-top: 19px;}
+.temp_carte{padding-left: 1rem;}
+
+#map{width: 100%;
+    height: 100vw;
+}
+
+
+/*---------- INPUT AJOUT AND DELETE CAPTEUR ------------*/
+input{
+    height: 25px;
+    border-radius: 5px;
+}
+label {
+    font-size: 11px;
+}
+.input_cpt_id{
+margin-top:1rem;
+}
+.bloc_add_supp{
+color: #29292e;
+margin-top: 2rem;
+background: white;
+box-shadow: 0px 0px 1px 4px white;
+width: 30%;
+}
+
+.bloc_cpt{
+background: white;
+padding: 2rem;
+border-radius: 6px;
+}
+
+/*.container_add{
+    display: flex;
+    justify-content: space-between;
+}*/
+
+.input_cpt_id input{
+width: 100%;
+}
+
+.bloc_cpt h3{
+margin-bottom: 1rem;
+}
+
+#add_capteur, #supp_capteur{
+
+padding: 0.5rem 1rem 0.5rem 1rem;
+border-radius: 5px;
+border: 0px;
+font-size: 17px;
+color: white;
+margin-top: 1rem;
+text-shadow: 1px 1px 1px #000;
+cursor:pointer;
+
+
+}
+
+
+
+#add_capteur:hover{
+    background:rgb(3, 230, 3) ;
+}
+
+#supp_capteur:hover{
+  background:  rgb(219, 19, 5);
+}
+
+#add_capteur{
+    background: rgb(0, 208, 0);
+}
+
+#supp_capteur{background: rgb(174, 16, 5);}
+
+input#add_cpt{
+    border-color: #00d000;
+}
+
+input#supp_cpt_id{
+    border-color: rgb(174, 16, 5);
+
+}
+
+/*---------- MODAL POPUP UPDATING ------------*/
+
+
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  
+  /* Modal Content */
+  .modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+  }
+  
+  /* The Close Button */
+  .close {
+    color: #fff;
+    float: right;
+    font-size: 35px;
+    font-weight: bold;
+    background: #287EB8;
+ 
+    position: relative;
+    top: -21px;
+    right: -21px;
+    padding: 0.5rem 1rem .5rem 1rem;
+    border-radius: 0 0 0px 12px;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #b45931;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .input_edit_inf{
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1rem;
+  }
+
+  #update_database{
+    background: rgb(0, 208, 0);
+padding: 0.25rem;
+border-radius: 5px;
+border: 0px;
+font-size: 17px;
+color: white;
+margin-top: 1rem;
+cursor: pointer;
+float: right;
+margin-bottom: 1rem;
+bottom: 10px;
+position: relative;
+
+  }
+
+  #update_database:hover{
+    background:rgb(3, 230, 3);
+  }  
