@@ -19,7 +19,7 @@
                 echo json_encode($response, JSON_PRETTY_PRINT);
         }
 
-        function getCapteurById($id=0)
+        function getCapteurById($id)
         {
                 global $conn;
                 $query = "SELECT * FROM Capteur";
