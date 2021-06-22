@@ -52,11 +52,36 @@ var getDataCapteur = function(){
         var date = data.map(function(elem){
          return elem.Rel_Date
        })
-
-
        document.getElementById("temperature_id_1").innerHTML = ' ' + temperature + "°C"
+       if(temperature > 25){
+        document.getElementById("temperature_id_1").style.color = '#f90000'
+        document.getElementById("notification").innerHTML = "Pensez à vous hydrater il fait chaud trés chaud aujourd'hui! " + temperature + "°C"
+
+       } else if(temperature > 20){
+        document.getElementById("temperature_id_1").style.color = '#b45931'
+
+       }else if (temperature < 20){
+        document.getElementById("temperature_id_1").style.color = '#0065AA;'
+       }else{
+        document.getElementById("temperature_id_1").style.color = '#81C2EE;'
+       }
+
+
        document.getElementById("date_id_1").innerHTML = date
        document.getElementById("humidite_id_1").innerHTML = ' ' + humidite + "%"
+       if(humidite > 50){
+        document.getElementById("humidite_id_1").style.color = '#005188'
+      }else if(humidite > 40){
+        document.getElementById("humidite_id_1").style.color = '#65a9d7'
+
+      }else if(humidite > 30){
+        document.getElementById("humidite_id_1").style.color = '#9ad6ff'
+
+      }else{
+        document.getElementById("humidite_id_1").style.color = '#cbeaff'
+      }
+      
+      
 
       }
     }
@@ -231,7 +256,7 @@ function UpdateData(){
         var update_capteur_Activation = document.getElementById("edit_Activation").value
         var update_capteur_Installation = document.getElementById("edit_Installation").textContent
 
-
+        
         var UpdateData = new Object(); 
 
         // utilisation du constructeur Object
@@ -254,10 +279,21 @@ function UpdateData(){
            // make the HTTP put request using fetch api
            fetch(url_updating, putMethod)
            .then(response => response.json())
-           .then(data => console.log(data)) // ON AFFICHE LE SUCCÉS DANS LA CONSOLE
-           .catch(err => console.log(err)) // ON AFFICHE UN MESSAGE D'ERREUR
+           .then(data => {
+            document.getElementById("succes_update").innerHTML = data.status_message
+            document.getElementById("edit_Latitude").value = ''
+            document.getElementById("edit_Longitude").value = ''
+            document.getElementById("edit_Name").value = ''
+            document.getElementById("edit_adress").value = ''
+            document.getElementById("edit_Activation").checked = false
+
+           }) // ON AFFICHE LE SUCCÉS DANS LA CONSOLE
+           .catch(err => {
+            document.getElementById("succes_update").innerHTML = err.status_message
+
+           }) // ON AFFICHE UN MESSAGE D'ERREUR
    
-    
+
     }
 
 
@@ -292,10 +328,18 @@ function UpdateData(){
        // make the HTTP put request using fetch api
        fetch(url_adding, POSTMethod)
        .then(response => response.json())
-       .then(data => console.log(data)) // ON AFFICHE LE SUCCÉS DANS LA CONSOLE
-       .catch(err => console.log(err)) // ON AFFICHE UN MESSAGE D'ERREUR
+       .then(data => {
+         document.getElementById("succes_add").innerHTML = data.status_message
+         document.getElementById("add_cpt_latitude").value = ''
+         document.getElementById("add_cpt_longitude").value = ''
+         document.getElementById("add_cpt_adress").value = ''
+         document.getElementById("add_cpt_name").value = ''
+        })
+       .catch(err => {
+        document.getElementById("succes_add").innerHTML = err.status_message
+
+       }) // ON AFFICHE UN MESSAGE D'ERREUR
 
  
-       
 
     }

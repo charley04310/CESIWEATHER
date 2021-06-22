@@ -10,12 +10,12 @@
     <script src="js/anim.js"></script>
     <script src="js/ajax.js"></script>
     <script src="js/fonction.js"></script>
+    <script src="js/map.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2/dist/chart.min.js"></script>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <title>CESI WEATHER CREATIVE SOLUTION CONFORT</title>
@@ -28,7 +28,7 @@
         <div id="logo_cesi_weather"><img height="50px" src="img/logo_cesiweather.png" alt="CESIWEATHER"></div>
       <div class="menu">
           <ul id="liste_menu">
-            <li class="navigation"><a href="#" style="text-decoration: none;"> CAPTEUR SALON</a></li>
+            <li class="navigation"><a href="#"> CAPTEUR SALON</a></li>
             <li class="navigation"><a href="#"> CAPTEUR SALON</a></li>
             <li class="navigation"><a href="#"> CAPTEUR SALON</a></li>
         </ul>
@@ -54,7 +54,8 @@
      </div>
   </div>
  
- 
+  <p id="notification" style="font-style: italic; font-size: 14px; color: white;"></p>
+
   <!-----------------------------------   CARTE WEATHER ------------------------------------>
 
 <div class="bloc_googlemap">
@@ -67,31 +68,37 @@
 
 
 
+
      <div class="carte_weather">
+
+  <!--------  BOUTON EDIT DES CARTES----------->
+
+      <div id="set_modal" onclick="SetModal()">
+
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+          <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+          <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+        </svg>
+      </div>
+
           <div class="text_carte">
-            <h2>CAPTEUR <span style="color:#b45931;" id="name_capteur" >SALON DE THE</span></h2>
-              <p><span style="color:#287EB8;"><b>Humidité:</b></span><span id="humidite_id_1">30%</span><p>
-                <em><p id="date_id_1">12/05/2021 : 16h45</p></em>
+            <h2>CAPTEUR <span id="name_capteur" >SALON</span></h2>
+              <p><span ><b>Humidité:</b></span><span id="humidite_id_1" style="color:#287EB8;">30%</span><p>
+                <em><p id="date_id_1" style="font-size: 12px; font-style: italic;">12/05/2021 : 16h45</p></em>
           </div>
   
           <div class="temp_carte">
               <p id="temperature_id_1"><b>27°C</b></p> 
           </div>
 
-<div id="set_modal" onclick="SetModal()">
-
-  <img src="img/DarkButton.svg" alt="edit" height="15px" style ="position: relative;
-  top: -7px; right: -8px; cursor: pointer;">
-
-</div>
             
 
-
+         
 
         
      </div>
 
-  <!---------------------------------------------- On OUVRE LA MODALE ------------------------------------->
+  <!---------------------------------------------- On OUVRE LA MODALE uPDATE ------------------------------------->
 
 <div id="myModal" class="modal">
     <div class="modal-content">
@@ -99,7 +106,10 @@
       <h2> Bienvenue dans les informations personnelles de votre CAPTEUR</h2>
 
       <p>Vous souhaitez modifier les informations relatives à votre capteur ? </p>
+  <!-------- REPONSE DE LA REQUETE----------->
 
+      <p id="succes_update" style="padding-top: 1rem; color: green;"></p>
+  <!--------  Formulaire de la requete d'update----------->
 
       <div class="input_edit_inf">
 
@@ -110,18 +120,18 @@
         
               <div class="">
                 <label for="name"><em>Latitude</em></label><br/>
-                  <input type="text" id="edit_Latitude" name="Cpt_Latitude" required minlength="3" maxlength="10" size="18">
+                  <input type="number" id="edit_Latitude" name="Cpt_Latitude" required minlength="3" maxlength="10" size="18">
                 
               </div>
           
               <div class="">
                   <label for="number"><em>Longitude</em></label><br/>
-                    <input type="text" id="edit_Longitude" name="Cpt_Longitude" required minlength="4" maxlength="8" size="18">
+                    <input type="number" id="edit_Longitude" name="Cpt_Longitude" minlength="4" maxlength="8" size="18" required>
               </div>
         
               <div class="">
-                <label for="number"><em>Adresse</em></label><br/>
-                <input type="edit_Adress" id="edit_Adress" name="Cpt_Adresse" required minlength="4" maxlength="8" size="18">
+                <label for="text"><em>Adresse</em></label><br/>
+                <input type="edit_Adress" id="edit_Adress" name="Cpt_Adresse" minlength="4" maxlength="40" size="18" required>
               </div>   
            
       </div>
@@ -157,6 +167,7 @@
 
       <h3>AJOUTEZ UN CAPTEUR</h3>
       <div style="height: 3px; border-radius:5px; background-color: rgb(0, 208, 0); width: 15%; text-align: center; margin-bottom: 1rem;"></div>
+<p id="succes_add" style="padding-top: 1rem; color: green;"></p>
 
 <div class="container_add">
   <div class="bloc_left_add">
@@ -164,12 +175,12 @@
        <!--------------- ON RENSEIGNE LES INPUTS POUR CRÉER UN CAPTEUR ----------------->
 
       <label for="name"><em>Nom</em></label><br/>
-        <input type="text" id="add_cpt_name" name="Cpt_Latitude" required minlength="3" maxlength="10" size="18">
+        <input type="text" id="add_cpt_name" name="Cpt_Latitude" minlength="3" maxlength="10" size="18" required>
     </div>
 
     <div class="input_cpt_id">
       <label for="Latitude"><em>Latitude</em></label><br/>
-        <input type="text" id="add_cpt_latitude" required minlength="3" maxlength="10" size="18">
+        <input type="number" id="add_cpt_latitude" minlength="10" maxlength="15" size="18" required>
     </div>
  
 
@@ -179,12 +190,12 @@
 
     <div class="input_cpt_id">
       <label for="Longitude"><em>Longitude</em></label><br/>
-        <input type="text" id="add_cpt_longitude" name="name" required minlength="4" maxlength="10" size="18">
+        <input type="number" id="add_cpt_longitude" name="Longitude" minlength="4" maxlength="10" size="18" required>
     </div>
 
     <div class="input_cpt_id">
       <label for="Activation"><em>Adresse</em></label><br/>
-        <input type="text" id="add_cpt_adress" name="name" required minlength="4" maxlength="10" size="18">
+        <input type="text" id="add_cpt_adress" name="adresse" minlength="4" maxlength="40" size="18" required>
     </div>
 
 
@@ -201,17 +212,14 @@
       </div>
   </div>
 
+  <div id="map" style="height:450px"></div>
+
+
 </div>
   
 
 
 </div>
- <div id="map" style="height:450px"></div>
-
-
-
-
-
 
 
 

@@ -1,20 +1,22 @@
 
-let html_map = document.querySelector('#map')
-class GoogleMap{
-    /** Charge la carte sur un élément HTML */
-    load (element){
-$script('https://maps.googleapi.com/maps/api/js', function(){   
-    let center = {lat: -34.397, lng: 150.644};
-    let map = new google.maps.Map(element, {
-        center: {lat: -34.397, lng: 150.644},
-        zoom: 8
-      });
-})
-    }
-}
-if(html_map !== null){
+function initMap() {
+    // The location of Uluru
+    const uluru = { lat: -25.344, lng: 131.036 };
+    // The map, centered at Uluru
+    const map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 4,
+      center: uluru,
+    });
+    // The marker, positioned at Uluru
+    const marker = new google.maps.Marker({
+      position: uluru,
+      map: map,
+    });
+  }
+
+if(map !== null){
     let map = new GoogleMap()
-    map.load(html_map)
+    map.load(map)
 
 
 }
