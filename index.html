@@ -11,15 +11,14 @@
     <script src="js/ajax.js"></script>
     <script src="js/fonction.js"></script>
     <script src="js/map.js"></script>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2/dist/chart.min.js"></script>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet"> 
     <title>CESI WEATHER CREATIVE SOLUTION CONFORT</title>
 </head>
+
 <body>
   
  <header>
@@ -28,15 +27,16 @@
         <div id="logo_cesi_weather"><img height="50px" src="img/logo_cesiweather.png" alt="CESIWEATHER"></div>
       <div class="menu">
           <ul id="liste_menu">
-            <li class="navigation"><a href="#"> CAPTEUR SALON</a></li>
-            <li class="navigation"><a href="#"> CAPTEUR SALON</a></li>
-            <li class="navigation"><a href="#"> CAPTEUR SALON</a></li>
+            <li class="navigation active"><a href="#"> Acceuil</a></li>
+            <li class="navigation"><a href="#"> Contact</a></li>
         </ul>
 
       </div>
     
      </div>
  </header>
+
+
 
 <section class="container_HP">
 
@@ -45,14 +45,14 @@
   <div style="height: 4px; border-radius:5px; background-color: #287EB8; width: 15%; text-align: center; "></div>
 
   <!------------------------------- GRAPHIQUES DES TEMPERATURES------------------------------------------>
-  <div id="graphiques">
- <div class="graph_hum">
-     <canvas id="myChart_hum"></canvas>
- </div>
-     <div class="graph_temp">
-         <canvas id="myChart_temp"></canvas>
-     </div>
-  </div>
+<div id="graphiques">
+      <div class="graph_hum">
+          <canvas id="myChart_hum"></canvas>
+      </div>
+      <div class="graph_temp">
+          <canvas id="myChart_temp"></canvas>
+      </div>
+</div>
  
   <p id="notification" style="font-style: italic; font-size: 14px; color: white;"></p>
 
@@ -60,102 +60,74 @@
 
 <div class="bloc_googlemap">
 
-  <h1>VOS DIFFERENTS CAPTEURS</h1>
-  <div style="height: 4px; border-radius:5px; background-color: #287EB8; width: 15%; text-align: center; "></div>
+    <h1>VOS DIFFERENTS CAPTEURS</h1>
+        <div style="height: 4px; border-radius:5px; background-color: #287EB8; width: 15%; text-align: center; "></div>
 
+  <!---------------------------------------------- On OUVRE LA MODALE uPDATE ------------------------------------->
 
   <div id="bloc_carte_weather">
 
 
 
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+              <span class="close">&times;</span>
+                <h2> Bienvenue dans les informations personnelles de votre CAPTEUR</h2>
+                 <p>Vous souhaitez modifier les informations relatives à votre capteur ?</p>
+                <p id="succes_update" style="padding-top: 1rem; color: green;"></p>
 
-     <div class="carte_weather">
+              <div class="input_edit_inf">
 
-  <!--------  BOUTON EDIT DES CARTES----------->
-
-      <div id="set_modal" onclick="SetModal()">
-
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-          <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-          <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-        </svg>
-      </div>
-
-          <div class="text_carte">
-            <h2>CAPTEUR <span id="name_capteur" >SALON</span></h2>
-              <p><span ><b>Humidité:</b></span><span id="humidite_id_1" style="color:#287EB8;">30%</span><p>
-                <em><p id="date_id_1" style="font-size: 12px; font-style: italic;">12/05/2021 : 16h45</p></em>
-          </div>
-  
-          <div class="temp_carte">
-              <p id="temperature_id_1"><b>27°C</b></p> 
-          </div>
-
-            
-
-         
-
-        
-     </div>
-
-  <!---------------------------------------------- On OUVRE LA MODALE uPDATE ------------------------------------->
-
-<div id="myModal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <h2> Bienvenue dans les informations personnelles de votre CAPTEUR</h2>
-
-      <p>Vous souhaitez modifier les informations relatives à votre capteur ? </p>
-  <!-------- REPONSE DE LA REQUETE----------->
-
-      <p id="succes_update" style="padding-top: 1rem; color: green;"></p>
-  <!--------  Formulaire de la requete d'update----------->
-
-      <div class="input_edit_inf">
-
-              <div class="">
-                <label for="name"><em>Nom du Capteur</em></label><br/>
-                  <input type="text" id="edit_Name" name="Cpt_Caracteristique" required minlength="3" maxlength="10" size="18">
-              </div>
-        
-              <div class="">
-                <label for="name"><em>Latitude</em></label><br/>
-                  <input type="number" id="edit_Latitude" name="Cpt_Latitude" required minlength="3" maxlength="10" size="18">
+                      <div class="">
+                        <label for="name"><em>Nom du Capteur</em></label><br/>
+                          <input type="text" id="edit_Name" name="Cpt_Caracteristique" required minlength="3" maxlength="10" size="18">
+                      </div>
                 
+                      <div class="">
+                        <label for="name"><em>Latitude</em></label><br/>
+                          <input type="number" id="edit_Latitude" name="Cpt_Latitude" required minlength="3" maxlength="10" size="18">
+                        
+                      </div>
+                  
+                      <div class="">
+                          <label for="number"><em>Longitude</em></label><br/>
+                          <input type="number" id="edit_Longitude" name="Cpt_Longitude" minlength="4" maxlength="8" size="18" required>
+                      </div>
+                
+                      <div class="">
+                        <label for="text"><em>Adresse</em></label><br/>
+                        <input type="text" id="edit_Adress" name="Cpt_Adresse" minlength="4" maxlength="40" size="18" required>
+                      </div>   
+        
+                    <div class="">
+                        <label for="text"><em>Capteur ID</em></label><br/>
+                        <input type="text" id="edit_Id" name="Cpt_Id" minlength="4" maxlength="40" size="18" required>
+                    </div> 
+
               </div>
           
-              <div class="">
-                  <label for="number"><em>Longitude</em></label><br/>
-                    <input type="number" id="edit_Longitude" name="Cpt_Longitude" minlength="4" maxlength="8" size="18" required>
+              <div style="padding-top: 1rem; font-size: 12px;">
+                <p id="edit_Installation"></p>
               </div>
-        
-              <div class="">
-                <label for="text"><em>Adresse</em></label><br/>
-                <input type="edit_Adress" id="edit_Adress" name="Cpt_Adresse" minlength="4" maxlength="40" size="18" required>
-              </div>   
-           
-      </div>
-   
-      <div style="padding-top: 1rem; font-size: 12px;">
-        <p id="edit_Installation"></p>
-      </div>
 
 
-      <div>
-        <label for="number"><em>Cochez la case pour activer votre Sonde</em></label><br/>
+              <div>
+                <label for="number"><em>Cochez la case pour activer votre Sonde</em></label><br/>
 
-        <input type="checkbox" id ="edit_Activation" name="Cpt_Activation" onclick="checkbok_activation()">
+                <input type="checkbox" id ="edit_Activation" name="Cpt_Activation" onclick="checkbok_activation()">
 
-        <button type="button" id="update_database"  onclick="UpdateData()">Mettre à jour</button>
+                <button type="button" id="update_database"  onclick="UpdateData()">Mettre à jour</button>
 
-      </div>
+                <!--- <button type="button" id="delete_database"  onclick="DeleteData()" style="color:red;">Supprimer</button> ----->
 
-    </div>
-</div>
+              </div>
+
+            </div>
+        </div>
 
 </div>
 
-  <!------------------ SECTION AJOUTER ET SUPPRIMER DES CAPTEURS------------------------->
+  <!------------------ SECTION AJOUTER  DES CAPTEURS------------------------->
 
   <h1>AJOUTER OU SUPPRIMER UN CAPTEUR DE VOTRE INTERFACE</h1>
   <div style="height: 4px; border-radius:5px; background-color: #287EB8; width: 15%; text-align: center; "></div>
@@ -163,11 +135,9 @@
 <div class="bloc_add_supp">
 
   <div class="bloc_cpt add">
- <!------------------------------------ SECTION AJOUTER DES CAPTEURS ----------------------------------->
-
       <h3>AJOUTEZ UN CAPTEUR</h3>
       <div style="height: 3px; border-radius:5px; background-color: rgb(0, 208, 0); width: 15%; text-align: center; margin-bottom: 1rem;"></div>
-<p id="succes_add" style="padding-top: 1rem; color: green;"></p>
+      <p id="succes_add" style="padding-top: 1rem; color: green;"></p>
 
 <div class="container_add">
   <div class="bloc_left_add">
@@ -210,7 +180,7 @@
       <div class="send_add">
           <button type="button" id="add_capteur"  onclick="AddDataCapteur()" >AJOUTER</button>
       </div>
-  </div>
+</div>
 
   <div id="map" style="height:450px"></div>
 
@@ -224,9 +194,10 @@
 
 
  <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUH4NQ1Ta_YBsSqSFHGqUhEXSlh_QCfvA&callback=initMap"></script>
- <script src="js/script_graphique.js"></script>
 </section>
-
+<script src="js/script_graphique.js"></script>
+<script>window.onload = function(){/*DataNameLoad();*/getAllDataCapteur();Setdatachart();}
+</script>
 </body>
 </html>
 

@@ -29,13 +29,47 @@ var getHttpRequest = function(){
   }
   
   // ---------------------   FONCTION du CAPTEUR N°1 ------------------------------------
-  
-  
-var getDataCapteur = function(){
-    var url_id = "http://92.167.119.186:8080/api/index.php?cptId=1&id=last"
-  
+function getAllDataCapteur(){
+//
+var url_getCapteurAll = "http://92.167.119.186:8080/api/capteur.php"
+
     var httpRequest = getHttpRequest()
     httpRequest.onreadystatechange = function(){
+      if(httpRequest.readyState === 4){
+
+// On décode le Javascript - variable de temperature
+  var data = JSON.parse(httpRequest.responseText)
+  //On enregistre la  variable de temperature
+
+    for(i=0 ; i < data.length ; i++){
+      // faire une requete pour recuperer infos des capteurs
+      // Afficher les informations dans la page html
+      
+    var IdCpt = data[i].Cpt_Id
+
+    getDataCapteur(IdCpt)
+    }
+
+ }
+    }
+
+    httpRequest.open('GET', url_getCapteurAll, true)
+    httpRequest.send()
+
+}
+
+  
+
+
+
+var getDataCapteur = function(IdCpt){
+
+  var url_id = "http://92.167.119.186:8080/api/index.php?cptId="+IdCpt+"&id=last"
+
+    var httpRequest = getHttpRequest()
+    httpRequest.onreadystatechange = function(){
+
+
       if(httpRequest.readyState === 4){
 
 // On décode le Javascript - variable de temperature
@@ -51,42 +85,57 @@ var getDataCapteur = function(){
 // On enregistre la variable de date
         var date = data.map(function(elem){
          return elem.Rel_Date
-       })
-       document.getElementById("temperature_id_1").innerHTML = ' ' + temperature + "°C"
-       if(temperature > 25){
-        document.getElementById("temperature_id_1").style.color = '#f90000'
-        document.getElementById("notification").innerHTML = "Pensez à vous hydrater il fait chaud trés chaud aujourd'hui! " + temperature + "°C"
+       })   
+
+      var parent = document.getElementById("bloc_carte_weather");
+      var newDiv =  document.createElement('div')
+      newDiv.innerHTML = '\
+      <div class="carte_weather" id="'+IdCpt+'" onclick="updatachart('+IdCpt+')">\
+      <div id="set_modal'+IdCpt+'" class="set_modal" onclick="SetModal('+IdCpt+')">\
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16"><path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>          <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/></svg></div>\
+      <div class="text_carte">\
+     <h2>CAPTEUR <span id="name_capteur'+IdCpt+'"></span></h2>\
+       <p><span ><b>Humidité:</b></span><span id="humidite_id'+IdCpt+'">'+humidite +'%</span><p>\
+       <em><p id="date_id'+IdCpt+'" style="font-size: 12px; font-style: italic;">'+date+'</p></em>\
+       </div>\
+     <div class="temp_carte">\
+       <p id="temperature_id'+IdCpt+'"><b>'+temperature+'°C</b></p>\
+     </div></div>\
+';
+
+      parent.append(newDiv)
+
+
+      if(temperature > 25){
+        document.getElementById("temperature_id"+IdCpt).style.color = '#f90000'
 
        } else if(temperature > 20){
-        document.getElementById("temperature_id_1").style.color = '#b45931'
+        document.getElementById("temperature_id"+IdCpt).style.color = '#b45931'
 
-       }else if (temperature < 20){
-        document.getElementById("temperature_id_1").style.color = '#0065AA;'
-       }else{
-        document.getElementById("temperature_id_1").style.color = '#81C2EE;'
+       }else {
+        document.getElementById("temperature_id"+IdCpt).style.color = 'blue;'
        }
 
-
-       document.getElementById("date_id_1").innerHTML = date
-       document.getElementById("humidite_id_1").innerHTML = ' ' + humidite + "%"
        if(humidite > 50){
-        document.getElementById("humidite_id_1").style.color = '#005188'
+        document.getElementById("humidite_id"+IdCpt).style.color = '#005188'
       }else if(humidite > 40){
-        document.getElementById("humidite_id_1").style.color = '#65a9d7'
+        document.getElementById("humidite_id"+IdCpt).style.color = '#65a9d7'
 
       }else if(humidite > 30){
-        document.getElementById("humidite_id_1").style.color = '#9ad6ff'
+        document.getElementById("humidite_id"+IdCpt).style.color = '#9ad6ff'
 
       }else{
-        document.getElementById("humidite_id_1").style.color = '#cbeaff'
-      }
-      
-      
+        document.getElementById("humidite_id"+IdCpt).style.color = '#cbeaff'
+      }  
+       
+      DataNameLoad(IdCpt)
 
-      }
-    }
-    httpRequest.open('GET', url_id, true)
-    httpRequest.send()
+  }
+
+}
+  
+httpRequest.open('GET', url_id, true)
+httpRequest.send()
 
 //----------  On REQUETE LE NOM DU CAPTEUR a la bd
 
@@ -95,9 +144,9 @@ var getDataCapteur = function(){
 //On Lance la fonction au chargement de la page
 
 
-function DataNameLoad(){
+function DataNameLoad(IdCpt){
 
-    var url_name = "http://92.167.119.186:8080/api/capteur.php?id=1"
+    var url_name = "http://92.167.119.186:8080/api/capteur.php?id="+IdCpt+""
   
     var httpRequest = getHttpRequest()
     httpRequest.onreadystatechange = function(){
@@ -109,25 +158,25 @@ var data = JSON.parse(httpRequest.responseText)
 var Capteur_name = data.map(function(elem){
     return elem.Cpt_Caracteristique
   })
-       document.getElementById("name_capteur").innerHTML =  Capteur_name
-     
+   document.getElementById("name_capteur"+IdCpt).innerHTML = Capteur_name
+
       }
+
     }
     httpRequest.open('GET', url_name, true)
     httpRequest.send()
 }
 
-window.onload = function (){getDataCapteur(); DataNameLoad();}
 
 
 // ------------------  On Crée la fonction d'ouverture de la popup + connection API --------------------------------
 
-  function SetModal(){
+  function SetModal(IdCpt){
 
     var modal = document.getElementById("myModal");
     
     // Get the button that opens the modal
-    var btn = document.getElementById("set_modal");
+    var btn = document.getElementById("set_modal"+IdCpt);
     
     // Get the <span> element that closes the modal
     var span = document.getElementsByClassName("close")[0];
@@ -149,7 +198,7 @@ window.onload = function (){getDataCapteur(); DataNameLoad();}
       }
     }
      
-    var url_edit_inf = "http://92.167.119.186:8080/api/capteur.php?id=1"
+    var url_edit_inf = "http://92.167.119.186:8080/api/capteur.php?id="+IdCpt+""
     
     var httpRequest = getHttpRequest()
     httpRequest.onreadystatechange = function(){
@@ -157,7 +206,8 @@ window.onload = function (){getDataCapteur(); DataNameLoad();}
     
     // On décode le Javascript - variable de temperature
        var data = JSON.parse(httpRequest.responseText)
-    
+
+
     //On enregistre la  variable de nom
        var Capteur_name = data.map(function(elem){
          return elem.Cpt_Caracteristique
@@ -180,6 +230,10 @@ window.onload = function (){getDataCapteur(); DataNameLoad();}
         return elem.Cpt_Activation
        
       })
+      var Capteur_Id = data.map(function(elem){
+        return elem.Cpt_Id
+       
+      })
 
       if (Capteur_activation == "1" ) { 
         document.getElementById("edit_Activation").checked = true
@@ -192,8 +246,6 @@ window.onload = function (){getDataCapteur(); DataNameLoad();}
         
      }    
 
-
-
       var Capteur_dateInstall = data.map(function(elem){
         return elem.Cpt_DateInstallation
       })
@@ -205,7 +257,7 @@ window.onload = function (){getDataCapteur(); DataNameLoad();}
     document.getElementById("edit_Longitude").value =  Capteur_longitude
     document.getElementById("edit_Adress").value =  Capteur_adress
     document.getElementById("edit_Installation").innerHTML =  Capteur_dateInstall
-
+    document.getElementById("edit_Id").value =  Capteur_Id
 
 
        
@@ -243,20 +295,20 @@ window.onload = function (){getDataCapteur(); DataNameLoad();}
 
 function UpdateData(){
 
+   
         // On enregistre les données dans des variables respectives
         var update_Latitude_capteur = document.getElementById("edit_Latitude").value
         var update_Longitude_capteur = document.getElementById("edit_Longitude").value
         var update_Adresse_capteur = document.getElementById("edit_Adress").value
+        var update_capteur_Id = document.getElementById("edit_Id").value
 
         // On met à jour le nom du capteur dans l'interface
         var update_capteur_name = document.getElementById("edit_Name").value
-        document.getElementById("name_capteur").innerHTML =  update_capteur_name
-
-
+        document.getElementById("name_capteur"+update_capteur_Id).innerHTML =  update_capteur_name
+        
         var update_capteur_Activation = document.getElementById("edit_Activation").value
         var update_capteur_Installation = document.getElementById("edit_Installation").textContent
 
-        
         var UpdateData = new Object(); 
 
         // utilisation du constructeur Object
@@ -275,7 +327,10 @@ function UpdateData(){
             },
             body: JSON.stringify(UpdateData) // ON ENVOIE LES DATA SOUS FORMAT JSON
            }
-           var url_updating =   	"http://92.167.119.186:8080/api/capteur.php?id=1"
+
+
+      
+           var url_updating = "http://92.167.119.186:8080/api/w_Capteur.php?id="+update_capteur_Id+""
            // make the HTTP put request using fetch api
            fetch(url_updating, putMethod)
            .then(response => response.json())
@@ -284,18 +339,15 @@ function UpdateData(){
             document.getElementById("edit_Latitude").value = ''
             document.getElementById("edit_Longitude").value = ''
             document.getElementById("edit_Name").value = ''
-            document.getElementById("edit_adress").value = ''
+            document.getElementById("edit_Adress").value = ''
             document.getElementById("edit_Activation").checked = false
-
            }) // ON AFFICHE LE SUCCÉS DANS LA CONSOLE
            .catch(err => {
             document.getElementById("succes_update").innerHTML = err.status_message
-
+       
            }) // ON AFFICHE UN MESSAGE D'ERREUR
    
-
     }
-
 
 
 
@@ -306,7 +358,7 @@ function UpdateData(){
      var AddData_Longitude_capteur = document.getElementById("add_cpt_longitude").value
      var AddData_Adresse_capteur = document.getElementById("add_cpt_adress").value
      var AddData_Name_capteur = document.getElementById("add_cpt_name").value
-     var AddData_Activation_capteur = "0"
+     var AddData_Activation_capteur = 1
 
      var AddData = new Object(); 
 
@@ -317,6 +369,9 @@ function UpdateData(){
      AddData.Cpt_Adresse = AddData_Adresse_capteur
      AddData.Cpt_Activation = AddData_Activation_capteur
 
+     //-------- ON CRÉE UN NOUVEAU LI dans le menu ---- 
+
+
      const POSTMethod = {
         method: 'POST', // MethodE POST
         headers: {
@@ -324,7 +379,9 @@ function UpdateData(){
         },
         body: JSON.stringify(AddData) // ON ENVOIE LES DATA SOUS FORMAT JSON
        }
-       var url_adding = "http://92.167.119.186:8080/api/capteur.php"
+
+
+       var url_adding = "http://92.167.119.186:8080/api/w_Capteur.php"
        // make the HTTP put request using fetch api
        fetch(url_adding, POSTMethod)
        .then(response => response.json())
@@ -334,12 +391,37 @@ function UpdateData(){
          document.getElementById("add_cpt_longitude").value = ''
          document.getElementById("add_cpt_adress").value = ''
          document.getElementById("add_cpt_name").value = ''
+         
         })
        .catch(err => {
         document.getElementById("succes_add").innerHTML = err.status_message
 
        }) // ON AFFICHE UN MESSAGE D'ERREUR
+      
+     }
 
+     /*function DeleteData(){
+
+  
+      var delete_capteur_Id = document.getElementById("edit_Id").value
+
+      // DÉCLARATION DE LA MÉTHODE D'ENVOI 
+      const DeleteMethod = {
+          method: 'DELETE', // MethodE UPDATING
+          body: JSON.stringify(UpdateData) // ON ENVOIE LES DATA SOUS FORMAT JSON
+         }
+
+
+    
+         var url_deleting = "http://92.167.119.186:8080/api/w_Capteur.php?id="+delete_capteur_Id+""
+         // make the HTTP put request using fetch api
+         fetch(url_deleting, DeleteMethod)
+         .then(response => response.json())
+         .then(data => {console.log(data)
+         }) // ON AFFICHE LE SUCCÉS DANS LA CONSOLE
+         .catch(err => {
+          document.getElementById("succes_update").innerHTML = err.status_message
+     
+         }) // ON AFFICHE UN MESSAGE D'ERREUR
  
-
-    }
+  }*/

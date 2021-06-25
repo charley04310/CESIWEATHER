@@ -1,4 +1,4 @@
-body{margin: 0;font-family: 'Roboto', sans-serif; background-color: #29292E;}
+body{margin: 0;font-family: 'Poppins', sans-serif; background-color: #29292E;}
 section.container_HP{ max-width: 1200px; margin: 0 auto;}
 header{border-bottom: 1px  solid #181818; padding: 1rem 0 1rem 0;
 background-color: #29292E;
@@ -9,7 +9,6 @@ h2{ margin: 0; font-size: 20px;}
 h3{margin: 0;}
 p{ margin: 0;}
  
-a{text-decoration: none !important; color:#ffffff !important;}
 
 #logo_cesi_weather{ width: 60px;}
 
@@ -66,15 +65,20 @@ li.navigation.active{
    }
 
 #graphiques{ display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 /*---------- CARTE WEATHER ------------*/
 
 #logo_sun{ width: 55px; padding-top: 5px;}
-#bloc_carte_weather{display: flex; justify-content: flex-start; margin: 2rem 0 2rem 0;}
-.carte_weather{box-shadow: -1px 1px 0px #ffffff8c;
-    background: #2c2c33;color:rgb(218, 218, 218);display: flex; BORDER: 1PX SOLID #545353; width: 370px; padding: 1rem; border-radius: 5px; justify-content: center;}
+#bloc_carte_weather{display: flex; justify-content: center; margin: 2rem 0 2rem 0; flex-wrap: wrap;}
+
+.carte_weather{background: #2c2c33;color:rgb(218, 218, 218);display:flex; BORDER: 0.5PX SOLID #545353; width: 350px; padding: 1rem; justify-content: center;}
+
+.carte_weather:hover{background: #59595e; cursor: pointer;}
+
+.carte_weather.active{background: #59595e; cursor: pointer;}
 
 .lieux_capteurs{color:#b45931;}
 .text_carte{padding-left: 1rem;}
@@ -85,8 +89,7 @@ li.navigation.active{
     height: 100vw;
 }
 .bi.bi-pencil-square {
-    position: relative;
-    left: -35px;
+ 
     top: 3px;
     cursor: pointer;
 }
@@ -225,10 +228,12 @@ input#supp_cpt_id{
       display: flex;
       justify-content: space-between;
       margin-top: 1rem;
+      flex-wrap: wrap;
   }
 
   #update_database{
-    background: rgb(0, 208, 0);
+
+background: rgb(0, 208, 0);
 padding: 0.25rem;
 border-radius: 5px;
 border: 0px;
@@ -246,3 +251,47 @@ position: relative;
   #update_database:hover{
     background:rgb(3, 230, 3);
   }  
+
+  .set_modal{
+    position: relative;
+    left: -30px;
+  }
+
+
+  @media (max-width: 1245px) {
+    .input_edit_inf{
+        display: block;
+    }
+    .input_edit_inf input{
+        width: 100%;
+    }
+    .modal-content {
+    
+        width: 75%;
+    }
+  }
+  
+
+  @media (max-width: 1024px) {
+    .bloc_cpt {
+      
+        width: 60%;
+    }
+  }
+
+
+  @media (max-width: 768px) {
+   
+    .bloc_add_supp {
+  
+      display: block;
+  }
+  .container_add input{
+      width: 100%;
+  }
+  .bloc_cpt {
+      
+    width: 80%;
+}
+    }
+a{text-decoration:none!important; color:#ffffff !important;}

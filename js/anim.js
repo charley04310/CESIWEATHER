@@ -7,12 +7,6 @@ $('li').mouseover( function() {
 });
 
 $(document).ready(function () {
-    $('.menu a').click(function () {
-        //removing the previous selected menu state
-        $('.menu').find('li.active').removeClass('active');
-        //adding the state for this parent menu
-        $(this).parents("li").addClass('active');
-
-    });
+    
 });
 
